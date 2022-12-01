@@ -1,18 +1,12 @@
-const drivers = {
-    chrome: {
-        version: '91.0.4472.101'
-        //version: '92.0.4515.107'
-    }, // https://chromedriver.chromium.org/
-    firefox: {
-        version: '0.29.1'
-    } // https://github.com/mozilla/geckodriver/releases
-}
 exports.config = {
     //
     // ====================
     // Runner Configuration
     // ====================
     //
+    // WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
+    // on a remote machine).
+    runner: 'local',
     //
     // ==================
     // Specify Test Files
@@ -59,11 +53,11 @@ exports.config = {
     // https://docs.saucelabs.com/reference/platforms-configurator
     //
     capabilities: [{
-
+    
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: 2,
+        maxInstances: 5,
         //
         browserName: 'chrome',
         acceptInsecureCerts: true,
@@ -77,13 +71,7 @@ exports.config = {
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
         // excludeDriverLogs: ['bugreport', 'server'],
-    }, 
-    // {
-    //     maxInstances: 1,
-    //     browserName: 'firefox',
-    //     acceptInsecureCerts: true
-    // }
-   ],
+    }],
     //
     // ===================
     // Test Configurations
@@ -91,12 +79,12 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'debug',
     //
     // Set specific log levels per logger
     // loggers:
     // - webdriver, webdriverio
-    // - @wdio/browserstack-service, @wdio/devtools-service, @wdio/sauce-service
+    // - @wdio/applitools-service, @wdio/browserstack-service, @wdio/devtools-service, @wdio/sauce-service
     // - @wdio/mocha-framework, @wdio/jasmine-framework
     // - @wdio/local-runner
     // - @wdio/sumologic-reporter
@@ -104,7 +92,7 @@ exports.config = {
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     // logLevels: {
     //     webdriver: 'info',
-    //     '@wdio/appium-service': 'info'
+    //     '@wdio/applitools-service': 'info'
     // },
     //
     // If you only want to run your tests until a specific amount of tests have failed use
@@ -115,7 +103,7 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://www.fairprice.com.sg',
+    baseUrl: 'http://localhost',
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -131,19 +119,8 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    // services: ['chromedriver'],
-    services: [
-        ['selenium-standalone', {
-            logPath: 'logs',
-            installArgs: {
-                drivers
-            }, // drivers to install
-            args: {
-                drivers
-            } // drivers to use
-        }]
-    ],
-
+    services: ['chromedriver'],
+    
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks
@@ -164,19 +141,20 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    // reporters: [['allure', {outputDir: 'allure-results'}]],
     reporters: [
-        ['cucumberjs-json', {
+        [ 'cucumberjs-json', {
             jsonFolder: 'reports/json/',
             language: 'en',
-        }, ],
+            },
+        ],
     ],
+
 
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./features/step-definitions/*.js'],
+        require: ['./features/step-definitions/**/*.js'],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -202,7 +180,7 @@ exports.config = {
         // <boolean> Enable this config to treat undefined definitions as warnings.
         ignoreUndefinedDefinitions: false
     },
-
+    
     //
     // =====
     // Hooks
@@ -245,9 +223,8 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-     before: function (capabilities, specs) {
-        browser.maximizeWindow();
-     },
+    // before: function (capabilities, specs) {
+    // },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {String} commandName hook command name
@@ -310,7 +287,7 @@ exports.config = {
      */
     // afterFeature: function (uri, feature) {
     // },
-
+    
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {String} commandName hook command name
@@ -348,10 +325,10 @@ exports.config = {
     // onComplete: function(exitCode, config, capabilities, results) {
     // },
     /**
-     * Gets executed when a refresh happens.
-     * @param {String} oldSessionId session ID of the old session
-     * @param {String} newSessionId session ID of the new session
-     */
+    * Gets executed when a refresh happens.
+    * @param {String} oldSessionId session ID of the old session
+    * @param {String} newSessionId session ID of the new session
+    */
     //onReload: function(oldSessionId, newSessionId) {
     //}
 }
