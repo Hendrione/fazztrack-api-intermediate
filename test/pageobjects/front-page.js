@@ -20,11 +20,16 @@ class FrontPage extends Page {
 
     async login(username, password) {
         await this.linkTextLogin.click()
-
+        await this.isBtnLoginDisplayed()
         await this.inputUsername.setValue(username)
         await this.inputPassword.setValue(password)
 
         await this.buttonLogin.click()
+    }
+
+    async isBtnLoginDisplayed () {
+        await (await this.buttonLogin).waitForDisplayed(2000);
+        return await (await this.buttonLogin).isDisplayed();
     }
 
     open() {
@@ -33,6 +38,4 @@ class FrontPage extends Page {
 
 }
 
-module.exports = {
-    FrontPage
-}
+module.exports = new FrontPage()
