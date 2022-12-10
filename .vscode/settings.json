@@ -1,0 +1,19 @@
+{
+    "cucumberautocomplete.steps": [
+        "features/step-definitions/**/*.js"
+    ],
+    "cucumberautocomplete.strictGherkinCompletion": true,
+    "cucumberautocomplete.syncfeatures": "features/*.feature",
+    "[javascript]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "cucumberautocomplete.pages": {
+
+    }
+}
