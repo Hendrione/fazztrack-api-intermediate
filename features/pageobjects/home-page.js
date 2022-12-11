@@ -15,6 +15,8 @@ class HomePage extends Page {
     }
 
     async clickProductName(itemName) {
+        await this.getProductNameLocator(itemName).scrollIntoView()
+        await browser.pause(1000)
         await this.getProductNameLocator(itemName).click()
     }
 
