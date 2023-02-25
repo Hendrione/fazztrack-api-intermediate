@@ -1,4 +1,5 @@
-const Page = require('./page')
+// const Page = require('./page')
+import Page from './page.js'
 
 class HomePage extends Page {
 
@@ -15,4 +16,5 @@ class HomePage extends Page {
     }
 }
 
-module.exports = new HomePage();
+// module.exports = new HomePage();
+export default new HomePage()
