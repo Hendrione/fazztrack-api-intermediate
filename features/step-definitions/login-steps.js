@@ -18,3 +18,29 @@ When(/^I try to login with correct credential$/, async() => {
 Then (/^I am successfully logged in$/, async() => {
     await HomePage.verifyLoginSuccess('wibowo.bullseye')
 })
+
+When('I try to login with username {string} and password {string}', async(username, password) => {
+    await FrontPage.login(username, password)
+})
+
+Then('I am successfully login with username {string}', async(username) => {
+  await HomePage.verifyLoginSuccess(username)
+})
+
+When('I add items to cart:', async(table) => {
+    let data = table.hashes()
+    for(let i=0; i < data.length; i++){
+        await HomePage.clickItemName(data[i].itemName)
+        await HomePage.clickAddToCartBtn()
+        await HomePage.acceptAlert()
+        await HomePage.clickBackToProductList()
+    }
+})
+
+// When(/^I try to login with username \"(.*)\" and password \"(.*)\"$/, async(username, password) => {
+//     await FrontPage.login(username, password)
+// })
+
+// Then(/^I am successfully login with username \"(.*)\"$/, async(username) => {
+//     await HomePage.verifyLoginSuccess(username)
+// })
