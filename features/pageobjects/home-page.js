@@ -11,31 +11,23 @@ class HomePage extends Page {
         return $(`[onclick='logOut()']`)
     }
 
+    get footer() {
+        return $(`#footc`)
+    }
+
+    async scrollToFooter(){
+       await browser.pause(5000)
+       await (await this.footer).scrollIntoView()
+       await browser.pause(5000)
+    }
+
     async buttonItemName(itemName){
         //back quote - dibawah tombol ESC
         return await $(`//a[text()='${itemName}']`)
     }
 
-    get buttonAddToCart(){
-        return $(`//a[text()='Add to cart']`)
-    }
-
     async clickItemName(itemName){
         await (await this.buttonItemName(itemName)).click()
-    }
-
-    async clickAddToCartBtn(){
-        await (await this.buttonAddToCart).click()
-        await browser.pause(5000)
-    }
-
-    async acceptAlert(){
-        await browser.acceptAlert()
-    }
-
-    async clickBackToProductList(){
-        await browser.back()
-        await browser.back()
     }
 
     async verifyLoginSuccess(user) {

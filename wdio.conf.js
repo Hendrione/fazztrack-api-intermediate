@@ -127,10 +127,10 @@ export const config = {
     framework: 'cucumber',
     //
     // The number of times to retry the entire specfile when it fails as a whole
-    // specFileRetries: 1,
+    specFileRetries: 2,
     //
     // Delay in seconds between the spec file retry attempts
-    // specFileRetriesDelay: 0,
+    specFileRetriesDelay: 5,
     //
     // Whether or not retried specfiles should be retried immediately or deferred to the end of the queue
     // specFileRetriesDeferred: false,
@@ -138,7 +138,13 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['spec',['allure', {
+        outputDir: 'allure-results',
+        useCucumberStepReporter: true,
+        disableWebdriverStepsReporting: true,
+        disableMochaHooks: true,
+        addConsoleLogs: true
+    }]],
 
 
     //
@@ -236,8 +242,10 @@ export const config = {
      * @param {String}                   uri      path to feature file
      * @param {GherkinDocument.IFeature} feature  Cucumber feature object
      */
-    // beforeFeature: function (uri, feature) {
-    // },
+    beforeFeature: async function (uri, feature) {
+        console.log("BEFORE FEATURE")
+        await browser.maximizeWindow()
+    },
     /**
      *
      * Runs before a Cucumber Scenario.
@@ -278,8 +286,10 @@ export const config = {
      * @param {number}                 result.duration  duration of scenario in milliseconds
      * @param {Object}                 context          Cucumber World object
      */
-    // afterScenario: function (world, result, context) {
-    // },
+    afterScenario: async function (world, result, context) {
+        console.log("AFTER SCENARIO")
+        await browser.deleteAllCookies()
+    },
     /**
      *
      * Runs after a Cucumber Feature.

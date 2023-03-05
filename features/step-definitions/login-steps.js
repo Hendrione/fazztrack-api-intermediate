@@ -5,6 +5,7 @@ import {Given, When, Then} from '@wdio/cucumber-framework'
 // const HomePage = require('../pageobjects/home-page');
 import FrontPage from '../pageobjects/front-page.js'
 import HomePage from '../pageobjects/home-page.js'
+import ProductDetailPage from '../pageobjects/product-detail-page.js'
 
 
 Given(/^I am on the front page$/, async() => {
@@ -31,10 +32,14 @@ When('I add items to cart:', async(table) => {
     let data = table.hashes()
     for(let i=0; i < data.length; i++){
         await HomePage.clickItemName(data[i].itemName)
-        await HomePage.clickAddToCartBtn()
-        await HomePage.acceptAlert()
-        await HomePage.clickBackToProductList()
+        await ProductDetailPage.clickAddToCartBtn()
+        await ProductDetailPage.acceptAlert()
+        await ProductDetailPage.clickBackToProductList()
     }
+})
+
+Given('I perform scrolling to footer', async() => {
+    await HomePage.scrollToFooter()
 })
 
 // When(/^I try to login with username \"(.*)\" and password \"(.*)\"$/, async(username, password) => {
